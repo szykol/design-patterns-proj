@@ -5,6 +5,9 @@ int main()
 {
     std::unique_ptr<GuessingGame> guessingGame = guessingGameFactory(GameType::INT);
 
-    guessingGame->handleQuestion();
-    guessingGame->handleInput(std::string("eldo"));
+    while (!guessingGame->finished())
+    {
+        guessingGame->handleQuestion();
+        guessingGame->handleInput(std::string("eldo"));
+    }
 }
