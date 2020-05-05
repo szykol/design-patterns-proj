@@ -1,9 +1,10 @@
-#include "Random.h"
+#include "GuessingGame.h"
 #include <iostream>
 
 int main()
 {
-    auto randomInt = Random::Instance().get<int>(1, 10);
+    std::unique_ptr<GuessingGame> guessingGame = guessingGameFactory(GameType::INT);
 
-    std::cout << "Your random int is: " << randomInt << std::endl;
+    guessingGame->handleQuestion();
+    guessingGame->handleInput(std::string("eldo"));
 }
