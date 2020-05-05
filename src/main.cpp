@@ -8,6 +8,10 @@ int main()
     while (!guessingGame->finished())
     {
         guessingGame->handleQuestion();
-        guessingGame->handleInput(std::string("eldo"));
+
+        std::string input;
+        std::getline(std::cin, input);
+
+        guessingGame->handleInput(input);
     }
 }

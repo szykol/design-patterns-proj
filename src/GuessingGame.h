@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "GuessingGameState.h"
+#include "Random.h"
 
 enum class GameType
 {
@@ -41,16 +42,41 @@ public:
 
 class IntGuessingGame : public GuessingGame
 {
+    const int guess_number = Random::Instance().get<int>(1, 100);
 
 public:
     virtual void handleQuestion()
     {
-        std::cout << "Asking a question from IntGuessingGame\n";
+        std::cout << "Guess a number between 1 and 100\n";
     }
     virtual void handleInput(const std::string &input)
     {
-        std::cout << "Handling input " << input << " from IntGuessingGame\n";
-        finish();
+        try
+        {
+            int inputInt = std::stoi(input);
+
+            if (inputInt > guess_number)
+            {
+                std::cout << "Lower!\n";
+            }
+            else if (inputInt < guess_number)
+            {
+                std::cout << "Higher!\n";
+            }
+            else
+            {
+                std::cout << "Correct!\n";
+                finish();
+            }
+        }
+        catch (std::invalid_argument const &e)
+        {
+            std::cout << "Please provide a number" << '\n';
+        }
+        catch (std::out_of_range const &e)
+        {
+            std::cout << "Please provide a number that fits into " << sizeof(int) << "bytes" << '\n';
+        }
     }
 };
 
