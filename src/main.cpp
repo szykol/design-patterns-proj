@@ -3,7 +3,7 @@
 
 int main()
 {
-    std::unique_ptr<GuessingGame> guessingGame = guessingGameFactory(GameType::INT);
+    std::unique_ptr<GuessingGame> guessingGame = guessingGameFactory(GameType::FLOAT);
 
     while (!guessingGame->finished())
     {

@@ -53,7 +53,7 @@ public:
     {
         try
         {
-            int inputInt = std::stoi(input);
+            auto inputInt = std::stoi(input);
 
             if (inputInt > guess_number)
             {
@@ -82,15 +82,42 @@ public:
 
 class FloatGuessingGame : public GuessingGame
 {
+    const float guess_number = Random::Instance().get<float>(1.0, 100.0);
+
 public:
     virtual void handleQuestion()
     {
-        std::cout << "Asking a question from FloatGuessingGame\n";
+        std::cout << "Guess a float number between 1 and 100\n";
     }
     virtual void handleInput(const std::string &input)
     {
-        std::cout << "Handling input " << input << " from FloatGuessingGame\n";
-        finish();
+        try
+        {
+            auto inputFloat = std::stof(input);
+            auto miss = std::abs(inputFloat - guess_number);
+            if (miss > 0.5)
+                if (inputFloat > guess_number)
+                {
+                    std::cout << "Lower!\n";
+                }
+                else
+                {
+                    std::cout << "Higher!\n";
+                }
+            else
+            {
+                std::cout << "Correct!\nYou've missed the number(" << guess_number << ") by " << miss << std::endl;
+                finish();
+            }
+        }
+        catch (std::invalid_argument const &e)
+        {
+            std::cout << "Please provide a number" << '\n';
+        }
+        catch (std::out_of_range const &e)
+        {
+            std::cout << "Please provide a number that fits into " << sizeof(float) << "bytes" << '\n';
+        }
     }
 };
 
