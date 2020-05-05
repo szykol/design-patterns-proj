@@ -1,6 +1,9 @@
-#include "hello.h"
+#include "Random.h"
+#include <iostream>
 
 int main()
 {
-    sayHello();
+    auto randomInt = Random::Instance().get<int>(1, 10);
+
+    std::cout << "Your random int is: " << randomInt << std::endl;
 }
