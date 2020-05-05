@@ -82,12 +82,12 @@ public:
 
 class FloatGuessingGame : public GuessingGame
 {
-    const float guess_number = Random::Instance().get<float>(1.0, 100.0);
+    const float guess_number = Random::Instance().get<float>(1.0, 10.0);
 
 public:
     virtual void handleQuestion()
     {
-        std::cout << "Guess a float number between 1 and 100\n";
+        std::cout << "Guess a float number between 1.0 and 10.0\n";
     }
     virtual void handleInput(const std::string &input)
     {
@@ -95,7 +95,7 @@ public:
         {
             auto inputFloat = std::stof(input);
             auto miss = std::abs(inputFloat - guess_number);
-            if (miss > 0.5)
+            if (miss > 0.15)
                 if (inputFloat > guess_number)
                 {
                     std::cout << "Lower!\n";
