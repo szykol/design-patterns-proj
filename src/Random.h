@@ -3,6 +3,38 @@
 #include <random>
 #include <memory>
 
+template <typename T>
+class RandRange
+{
+    std::vector<T> m_range;
+
+public:
+    RandRange(std::vector<T> range)
+    {
+        m_range = std::move(range);
+    }
+
+    auto begin() -> decltype(m_range.begin())
+    {
+        return m_range.begin();
+    }
+
+    auto end() -> decltype(m_range.end())
+    {
+        return m_range.end();
+    }
+
+    constexpr auto cbegin() -> decltype(m_range.cbegin())
+    {
+        return m_range.cbegin();
+    }
+
+    constexpr auto cend() -> decltype(m_range.cend())
+    {
+        return m_range.cend();
+    }
+};
+
 /** 
  * @brief  Basic random number generator
  */
@@ -39,6 +71,29 @@ public:
     {
         std::uniform_int_distribution<T> d(min, max);
         return d(*m_engine);
+    }
+
+    /** 
+	 * @brief  Function that returns a range of values between 
+	 * min and max(inclusive for integer types, exclusive for
+	 * floating point types)
+	 * @param  min:  minimal value
+	 * @param  max:  maximal value
+     * @param  size: size of range
+	 * @retval random number
+	 */
+    template <typename T>
+    RandRange<T>
+    get_range(T min, T max, size_t size)
+    {
+        std::vector<T> temp;
+        temp.reserve(size);
+
+        for (size_t i = 0; i < size; i++)
+        {
+            temp.emplace_back(get<T>(min, max));
+        }
+        return RandRange<T>(temp);
     }
 
 private:
